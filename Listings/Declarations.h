@@ -7,7 +7,7 @@
 #define LED_R 18
 #define LED_G 19
 #define LED_B 1
-
+#define LCD_ON	1			// <- CLEAR or SET this condition to turn off/on LCD and its components
 
 
 #define MASK(x) (1UL << (x))

@@ -10,6 +10,7 @@
 
 #ifndef __HD44780_H
 #define __HD44780_H
+#if LCD_ON
 
 #define MASK(x) (1UL << (x))
 
@@ -50,4 +51,5 @@ void LCD_WriteData(uint8_t DataToWrite);
 void LCD_WriteText(uint8_t* text);
 void LCD_WriteCommand(uint8_t command);
 void LCD_Init(void);
+#endif
 #endif

@@ -6,20 +6,15 @@
 
 #include "fsl_device_registers.h"
 #include "Declarations.h"
-
-#define LCD_ON				// <- comment this line to turn off LCD and its components
-#ifdef LCD_ON
-	#include "HD44780.h"
-#endif
-
+#include "HD44780.h"
 
 int main(void)
 {
 		uint8_t text[8]="hello !";
     init_hardware();
 	
-		//LCD_Init();
-		//LCD_WriteText(text);
+		LCD_Init();
+		LCD_WriteText(text);
 		
     while(1){}
 }
@@ -46,7 +41,7 @@ static void init_hardware(void){
 	FPTB->PCOR |= (1<<LED_G);
 	FPTD->PCOR |= (1<<LED_B);
 
-#ifdef LCD_ON
+#if LCD_ON
 	// LCD config
 	PORTE->PCR[5]  = PORT_PCR_MUX(1);            			// Set Pins to GPIO function
 	PORTE->PCR[20] = PORT_PCR_MUX(1);									// TODO: U can do it better !
