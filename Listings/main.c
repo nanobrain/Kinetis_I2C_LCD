@@ -6,15 +6,20 @@
 
 #include "fsl_device_registers.h"
 #include "Declarations.h"
-#include "HD44780.h"
+
+#define LCD_ON				// <- comment this line to turn off LCD and its components
+#ifdef LCD_ON
+	#include "HD44780.h"
+#endif
+
 
 int main(void)
 {
 		uint8_t text[8]="hello !";
     init_hardware();
 	
-		LCD_Init();
-		LCD_WriteText(text);
+		//LCD_Init();
+		//LCD_WriteText(text);
 		
     while(1){}
 }
@@ -28,6 +33,7 @@ static void init_hardware(void){
 
 	SIM->SOPT2 |= 	SIM_SOPT2_PLLFLLSEL_MASK; 				// set PLLFLLSEL to select the PLL for this clock source 
 
+	// LED config
 	PORTB->PCR[18] = PORT_PCR_MUX(1);              		// Set Pin B18 to GPIO function
 	PORTB->PCR[19] = PORT_PCR_MUX(1);              		// Set Pin B19 to GPIO function
 	PORTD->PCR[1]  = PORT_PCR_MUX(1);               	// Set Pin D1 to GPIO function
@@ -40,6 +46,8 @@ static void init_hardware(void){
 	FPTB->PCOR |= (1<<LED_G);
 	FPTD->PCOR |= (1<<LED_B);
 
+#ifdef LCD_ON
+	// LCD config
 	PORTE->PCR[5]  = PORT_PCR_MUX(1);            			// Set Pins to GPIO function
 	PORTE->PCR[20] = PORT_PCR_MUX(1);									// TODO: U can do it better !
 	PORTE->PCR[21] = PORT_PCR_MUX(1);									// but how ??
@@ -52,23 +60,25 @@ static void init_hardware(void){
 						|  MASK(D6)| MASK(D7)
 						|  MASK(E) | MASK(RS)
 						|  MASK(RW);
-							
-		RGB(1,0,0);		
-		_delay_ms(200);
-		RGB(0,1,0);
-		_delay_ms(200);
-		RGB(0,0,1);
-		_delay_ms(200);
-		RGB(0,0,0);
-		_delay_ms(200);
-		RGB(1,1,1);		
-		_delay_ms(400);
-		RGB(0,0,0);		
-		_delay_ms(200);		
-		RGB(1,1,1);		
-		_delay_ms(400);
-		RGB(0,0,0);		
-		_delay_ms(200);
+#endif				
+
+	// LED blink
+	RGB(1,0,0);		
+	_delay_ms(200);
+	RGB(0,1,0);
+	_delay_ms(200);
+	RGB(0,0,1);
+	_delay_ms(200);
+	RGB(0,0,0);
+	_delay_ms(200);
+	RGB(1,1,1);		
+	_delay_ms(400);
+	RGB(0,0,0);		
+	_delay_ms(200);		
+	RGB(1,1,1);		
+	_delay_ms(400);
+	RGB(0,0,0);		
+	_delay_ms(200);
 		
 }
 

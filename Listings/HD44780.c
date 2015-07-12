@@ -8,7 +8,7 @@
 ---Vss--Vcc--Vee---Rs---Rw---E---DB0-DB3--DB4-DB5-DB6-DB7-LED+--LED-
 */
 
-
+#ifdef LCD_ON
 #include "fsl_device_registers.h"
 #include "Declarations.h"
 #include "HD44780.h"
@@ -130,3 +130,4 @@ void LCD_Init(void){
 	
 	                                          // stop initialization
 }
+#endif
